@@ -1,0 +1,23 @@
+services:
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ="Europe/Lisbon"
+    ports:
+      - "1880:1880"
+    networks:
+      - node-red-net
+    volumes:
+      - node-red-data:/data
+  python-flask:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - node-red
+    networks:
+      - node-red-net
+networks:
+  node-red-net:
+volumes:
+  node-red-data:
